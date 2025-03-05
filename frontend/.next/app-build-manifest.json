@@ -1,7 +1,11 @@
 {
   "pages": {
-<<<<<<< HEAD
-<<<<<<< HEAD
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
     "/(dashboard)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -11,42 +15,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(dashboard)/dashboard/orders/page.js"
-=======
-=======
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
-<<<<<<< HEAD
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
-=======
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
     ],
-    "/layout": [
+    "/(dashboard)/dashboard/inventory/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
-    ],
-    "/(dashboard)/dashboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/dashboard/page.js"
-    ],
-    "/(dashboard)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/layout.js"
-<<<<<<< HEAD
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
-=======
->>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
+      "static/chunks/app/(dashboard)/dashboard/inventory/page.js"
     ]
   }
 }
