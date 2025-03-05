@@ -2,6 +2,1173 @@ const express = require('express');
 const router = express.Router();
 const Inventory = require('../db/db');
 
+const inventory = [
+  {
+      "product_name": "Aashirvaad Atta (Aashirvaad, Grocery)",
+      "category": "Grocery",
+      "brand": "Aashirvaad",
+      "quantity": 5,
+      "items": [
+          {
+              "expiry": "2025-08-20",
+              "barcode_id": 948111517968
+          },
+          {
+              "expiry": "2026-01-22",
+              "barcode_id": 862775459526
+          },
+          {
+              "expiry": "2025-07-18",
+              "barcode_id": 243627464311
+          },
+          {
+              "expiry": "2027-11-03",
+              "barcode_id": 293481790538
+          },
+          {
+              "expiry": "2027-06-18",
+              "barcode_id": 962666772154
+          }
+      ],
+      "related_items": [
+          "Flour",
+          "Grocery"
+      ],
+      "id": 1
+  },
+  {
+      "product_name": "Amul Ice Cream (Amul, Frozen)",
+      "category": "Frozen",
+      "brand": "Amul",
+      "quantity": 13,
+      "items": [
+          {
+              "expiry": "2025-05-05",
+              "barcode_id": 895561568224
+          },
+          {
+              "expiry": "2028-08-24",
+              "barcode_id": 145143749787
+          },
+          {
+              "expiry": "2027-08-24",
+              "barcode_id": 430638625255
+          },
+          {
+              "expiry": "2028-04-26",
+              "barcode_id": 844935876925
+          },
+          {
+              "expiry": "2026-09-24",
+              "barcode_id": 724281762900
+          },
+          {
+              "expiry": "2028-03-19",
+              "barcode_id": 479837481994
+          },
+          {
+              "expiry": "2027-09-15",
+              "barcode_id": 963713487359
+          },
+          {
+              "expiry": "2025-02-04",
+              "barcode_id": 210541989311
+          },
+          {
+              "expiry": "2026-02-23",
+              "barcode_id": 435632008386
+          },
+          {
+              "expiry": "2027-06-17",
+              "barcode_id": 931623756952
+          },
+          {
+              "expiry": "2025-08-22",
+              "barcode_id": 863466161652
+          },
+          {
+              "expiry": "2026-07-17",
+              "barcode_id": 766849280312
+          },
+          {
+              "expiry": "2027-09-21",
+              "barcode_id": 286935345023
+          }
+      ],
+      "related_items": [
+          "Ice Cream",
+          "Frozen"
+      ],
+      "id": 2
+  },
+  {
+      "product_name": "Amul Milk (Amul, Dairy)",
+      "category": "Dairy",
+      "brand": "Amul",
+      "quantity": 10,
+      "items": [
+          {
+              "expiry": "2027-06-24",
+              "barcode_id": 930025705105
+          },
+          {
+              "expiry": "2027-08-25",
+              "barcode_id": 599781915074
+          },
+          {
+              "expiry": "2027-02-08",
+              "barcode_id": 829476015655
+          },
+          {
+              "expiry": "2027-07-28",
+              "barcode_id": 869899092199
+          },
+          {
+              "expiry": "2026-02-16",
+              "barcode_id": 521520877606
+          },
+          {
+              "expiry": "2027-11-09",
+              "barcode_id": 902359324582
+          },
+          {
+              "expiry": "2028-02-26",
+              "barcode_id": 792836487789
+          },
+          {
+              "expiry": "2028-11-06",
+              "barcode_id": 286037113589
+          },
+          {
+              "expiry": "2026-02-01",
+              "barcode_id": 684258819394
+          },
+          {
+              "expiry": "2028-08-22",
+              "barcode_id": 219311185826
+          }
+      ],
+      "related_items": [
+          "Milk",
+          "Dairy"
+      ],
+      "id": 3
+  },
+  {
+      "product_name": "Bingo Mad Angles (Bingo, Snacks)",
+      "category": "Snacks",
+      "brand": "Bingo",
+      "quantity": 9,
+      "items": [
+          {
+              "expiry": "2027-01-17",
+              "barcode_id": 891243682307
+          },
+          {
+              "expiry": "2027-04-04",
+              "barcode_id": 727549773975
+          },
+          {
+              "expiry": "2027-12-18",
+              "barcode_id": 736431193387
+          },
+          {
+              "expiry": "2028-04-27",
+              "barcode_id": 340944085833
+          },
+          {
+              "expiry": "2026-12-14",
+              "barcode_id": 660844005708
+          },
+          {
+              "expiry": "2027-09-07",
+              "barcode_id": 373495871403
+          },
+          {
+              "expiry": "2026-06-01",
+              "barcode_id": 265165946152
+          },
+          {
+              "expiry": "2028-12-20",
+              "barcode_id": 550527789288
+          },
+          {
+              "expiry": "2028-07-10",
+              "barcode_id": 260405047467
+          }
+      ],
+      "related_items": [
+          "Chips",
+          "Snacks"
+      ],
+      "id": 4
+  },
+  {
+      "product_name": "Britannia Bread (Britannia, Bakery)",
+      "category": "Bakery",
+      "brand": "Britannia",
+      "quantity": 6,
+      "items": [
+          {
+              "expiry": "2025-12-16",
+              "barcode_id": 475097644746
+          },
+          {
+              "expiry": "2028-03-04",
+              "barcode_id": 787976950432
+          },
+          {
+              "expiry": "2026-11-18",
+              "barcode_id": 760035082391
+          },
+          {
+              "expiry": "2026-05-23",
+              "barcode_id": 646065220895
+          },
+          {
+              "expiry": "2025-04-19",
+              "barcode_id": 509172843923
+          },
+          {
+              "expiry": "2028-01-26",
+              "barcode_id": 271724423187
+          }
+      ],
+      "related_items": [
+          "Bread",
+          "Bakery"
+      ],
+      "id": 5
+  },
+  {
+      "product_name": "Britannia Cheese (Britannia, Dairy)",
+      "category": "Dairy",
+      "brand": "Britannia",
+      "quantity": 9,
+      "items": [
+          {
+              "expiry": "2028-07-19",
+              "barcode_id": 414118356638
+          },
+          {
+              "expiry": "2025-10-15",
+              "barcode_id": 645174454734
+          },
+          {
+              "expiry": "2026-04-24",
+              "barcode_id": 191300514011
+          },
+          {
+              "expiry": "2025-02-01",
+              "barcode_id": 925078068267
+          },
+          {
+              "expiry": "2025-02-25",
+              "barcode_id": 286700855360
+          },
+          {
+              "expiry": "2028-07-20",
+              "barcode_id": 411274827160
+          },
+          {
+              "expiry": "2025-08-06",
+              "barcode_id": 578817081335
+          },
+          {
+              "expiry": "2028-02-19",
+              "barcode_id": 782481415028
+          },
+          {
+              "expiry": "2027-12-03",
+              "barcode_id": 947435077827
+          }
+      ],
+      "related_items": [
+          "Cheese",
+          "Dairy"
+      ],
+      "id": 6
+  },
+  {
+      "product_name": "Coca-Cola (Coca-Cola, Beverages)",
+      "category": "Beverages",
+      "brand": "Coca-Cola",
+      "quantity": 7,
+      "items": [
+          {
+              "expiry": "2028-01-10",
+              "barcode_id": 231793123986
+          },
+          {
+              "expiry": "2028-07-02",
+              "barcode_id": 882343313588
+          },
+          {
+              "expiry": "2025-05-05",
+              "barcode_id": 212097775629
+          },
+          {
+              "expiry": "2025-07-26",
+              "barcode_id": 409898244089
+          },
+          {
+              "expiry": "2026-06-19",
+              "barcode_id": 516351835190
+          },
+          {
+              "expiry": "2028-09-10",
+              "barcode_id": 832804857477
+          },
+          {
+              "expiry": "2027-02-14",
+              "barcode_id": 776185615015
+          }
+      ],
+      "related_items": [
+          "Soft Drink",
+          "Beverages"
+      ],
+      "id": 7
+  },
+  {
+      "product_name": "Colgate Toothpaste (Colgate, Personal Care)",
+      "category": "Personal Care",
+      "brand": "Colgate",
+      "quantity": 8,
+      "items": [
+          {
+              "expiry": "2028-03-10",
+              "barcode_id": 792913424795
+          },
+          {
+              "expiry": "2027-10-11",
+              "barcode_id": 518080751664
+          },
+          {
+              "expiry": "2028-12-20",
+              "barcode_id": 610975332539
+          },
+          {
+              "expiry": "2027-10-14",
+              "barcode_id": 862773989222
+          },
+          {
+              "expiry": "2027-07-11",
+              "barcode_id": 487853671588
+          },
+          {
+              "expiry": "2027-05-22",
+              "barcode_id": 791256126241
+          },
+          {
+              "expiry": "2026-08-09",
+              "barcode_id": 342113108808
+          },
+          {
+              "expiry": "2028-03-10",
+              "barcode_id": 982644484845
+          }
+      ],
+      "related_items": [
+          "Toothpaste",
+          "Personal Care"
+      ],
+      "id": 8
+  },
+  {
+      "product_name": "Dove Shampoo (Dove, Personal Care)",
+      "category": "Personal Care",
+      "brand": "Dove",
+      "quantity": 5,
+      "items": [
+          {
+              "expiry": "2028-01-03",
+              "barcode_id": 807907640430
+          },
+          {
+              "expiry": "2026-04-01",
+              "barcode_id": 479774135373
+          },
+          {
+              "expiry": "2027-03-15",
+              "barcode_id": 321977842012
+          },
+          {
+              "expiry": "2028-05-10",
+              "barcode_id": 888093288632
+          },
+          {
+              "expiry": "2025-12-13",
+              "barcode_id": 333366934508
+          }
+      ],
+      "related_items": [
+          "Shampoo",
+          "Personal Care"
+      ],
+      "id": 9
+  },
+  {
+      "product_name": "Fortune Sunflower Oil (Fortune, Grocery)",
+      "category": "Grocery",
+      "brand": "Fortune",
+      "quantity": 1,
+      "items": [
+          {
+              "expiry": "2027-07-10",
+              "barcode_id": 577636328155
+          }
+      ],
+      "related_items": [
+          "Sunflower Oil",
+          "Grocery"
+      ],
+      "id": 10
+  },
+  {
+      "product_name": "Good Day Biscuits (Good, Bakery)",
+      "category": "Bakery",
+      "brand": "Good",
+      "quantity": 9,
+      "items": [
+          {
+              "expiry": "2026-02-21",
+              "barcode_id": 678682362550
+          },
+          {
+              "expiry": "2027-03-28",
+              "barcode_id": 407877615728
+          },
+          {
+              "expiry": "2027-04-16",
+              "barcode_id": 653574488490
+          },
+          {
+              "expiry": "2026-07-04",
+              "barcode_id": 130799037831
+          },
+          {
+              "expiry": "2028-06-11",
+              "barcode_id": 289843706299
+          },
+          {
+              "expiry": "2028-03-16",
+              "barcode_id": 974979333514
+          },
+          {
+              "expiry": "2028-07-21",
+              "barcode_id": 463731896045
+          },
+          {
+              "expiry": "2028-07-26",
+              "barcode_id": 257658024704
+          },
+          {
+              "expiry": "2028-03-13",
+              "barcode_id": 237873096878
+          }
+      ],
+      "related_items": [
+          "Biscuits",
+          "Snacks"
+      ],
+      "id": 11
+  },
+  {
+      "product_name": "Haldiram's Bhujia (Haldiram's, Snacks)",
+      "category": "Snacks",
+      "brand": "Haldiram's",
+      "quantity": 3,
+      "items": [
+          {
+              "expiry": "2028-11-27",
+              "barcode_id": 385219153198
+          },
+          {
+              "expiry": "2026-03-09",
+              "barcode_id": 751370279408
+          },
+          {
+              "expiry": "2027-01-07",
+              "barcode_id": 965360543515
+          }
+      ],
+      "related_items": [
+          "Bhujia",
+          "Snacks"
+      ],
+      "id": 12
+  },
+  {
+      "product_name": "Harvest Gold Brown Bread (Harvest, Bakery)",
+      "category": "Bakery",
+      "brand": "Harvest",
+      "quantity": 10,
+      "items": [
+          {
+              "expiry": "2027-08-07",
+              "barcode_id": 387969853723
+          },
+          {
+              "expiry": "2027-11-19",
+              "barcode_id": 515052343683
+          },
+          {
+              "expiry": "2026-08-23",
+              "barcode_id": 466129974013
+          },
+          {
+              "expiry": "2028-07-04",
+              "barcode_id": 537454303003
+          },
+          {
+              "expiry": "2026-02-03",
+              "barcode_id": 948218181603
+          },
+          {
+              "expiry": "2025-05-27",
+              "barcode_id": 189233636611
+          },
+          {
+              "expiry": "2028-02-17",
+              "barcode_id": 461580600000
+          },
+          {
+              "expiry": "2025-11-28",
+              "barcode_id": 374434199585
+          },
+          {
+              "expiry": "2028-09-13",
+              "barcode_id": 856252954258
+          },
+          {
+              "expiry": "2027-06-07",
+              "barcode_id": 134568862910
+          }
+      ],
+      "related_items": [
+          "Brown Bread",
+          "Bakery"
+      ],
+      "id": 13
+  },
+  {
+      "product_name": "India Gate Basmati Rice (India, Grocery)",
+      "category": "Grocery",
+      "brand": "India",
+      "quantity": 3,
+      "items": [
+          {
+              "expiry": "2026-05-19",
+              "barcode_id": 275966362604
+          },
+          {
+              "expiry": "2028-04-08",
+              "barcode_id": 291202244972
+          },
+          {
+              "expiry": "2027-10-25",
+              "barcode_id": 158429372867
+          }
+      ],
+      "related_items": [
+          "Basmati Rice",
+          "Grocery"
+      ],
+      "id": 14
+  },
+  {
+      "product_name": "Kurkure Masala Munch (Kurkure, Snacks)",
+      "category": "Snacks",
+      "brand": "Kurkure",
+      "quantity": 9,
+      "items": [
+          {
+              "expiry": "2027-11-09",
+              "barcode_id": 315036052604
+          },
+          {
+              "expiry": "2027-07-19",
+              "barcode_id": 272045601042
+          },
+          {
+              "expiry": "2028-04-14",
+              "barcode_id": 326869520370
+          },
+          {
+              "expiry": "2028-05-21",
+              "barcode_id": 168791635221
+          },
+          {
+              "expiry": "2028-09-26",
+              "barcode_id": 816175889344
+          },
+          {
+              "expiry": "2026-04-10",
+              "barcode_id": 135670152069
+          },
+          {
+              "expiry": "2026-08-01",
+              "barcode_id": 764143627315
+          },
+          {
+              "expiry": "2028-03-03",
+              "barcode_id": 426578108274
+          },
+          {
+              "expiry": "2025-08-22",
+              "barcode_id": 831542163587
+          }
+      ],
+      "related_items": [
+          "Chips",
+          "Snacks"
+      ],
+      "id": 15
+  },
+  {
+      "product_name": "Kwality Walls Ice Cream (Kwality, Frozen)",
+      "category": "Frozen",
+      "brand": "Kwality",
+      "quantity": 10,
+      "items": [
+          {
+              "expiry": "2028-10-08",
+              "barcode_id": 484833163756
+          },
+          {
+              "expiry": "2027-01-21",
+              "barcode_id": 460250162212
+          },
+          {
+              "expiry": "2026-09-10",
+              "barcode_id": 228738217818
+          },
+          {
+              "expiry": "2028-03-03",
+              "barcode_id": 664653002575
+          },
+          {
+              "expiry": "2027-04-02",
+              "barcode_id": 156740275535
+          },
+          {
+              "expiry": "2028-09-05",
+              "barcode_id": 860980950682
+          },
+          {
+              "expiry": "2025-03-07",
+              "barcode_id": 265270684953
+          },
+          {
+              "expiry": "2025-03-04",
+              "barcode_id": 554259202739
+          },
+          {
+              "expiry": "2028-08-25",
+              "barcode_id": 712759112859
+          },
+          {
+              "expiry": "2027-07-18",
+              "barcode_id": 289097635596
+          }
+      ],
+      "related_items": [
+          "Ice Cream",
+          "Frozen"
+      ],
+      "id": 16
+  },
+  {
+      "product_name": "Lays Chips (Lays, Snacks)",
+      "category": "Snacks",
+      "brand": "Lays",
+      "quantity": 8,
+      "items": [
+          {
+              "expiry": "2025-12-12",
+              "barcode_id": 613775827083
+          },
+          {
+              "expiry": "2026-04-08",
+              "barcode_id": 431027657672
+          },
+          {
+              "expiry": "2027-12-03",
+              "barcode_id": 132221071368
+          },
+          {
+              "expiry": "2028-08-19",
+              "barcode_id": 546905647584
+          },
+          {
+              "expiry": "2025-01-26",
+              "barcode_id": 452440237774
+          },
+          {
+              "expiry": "2028-11-17",
+              "barcode_id": 273601929398
+          },
+          {
+              "expiry": "2028-11-14",
+              "barcode_id": 512936839305
+          },
+          {
+              "expiry": "2025-01-07",
+              "barcode_id": 886085820137
+          }
+      ],
+      "related_items": [
+          "Chips",
+          "Snacks"
+      ],
+      "id": 17
+  },
+  {
+      "product_name": "McCain French Fries (McCain, Frozen)",
+      "category": "Frozen",
+      "brand": "McCain",
+      "quantity": 5,
+      "items": [
+          {
+              "expiry": "2028-06-23",
+              "barcode_id": 238041802088
+          },
+          {
+              "expiry": "2028-11-20",
+              "barcode_id": 660616920861
+          },
+          {
+              "expiry": "2025-11-01",
+              "barcode_id": 462815304392
+          },
+          {
+              "expiry": "2025-07-26",
+              "barcode_id": 734921870479
+          },
+          {
+              "expiry": "2025-03-15",
+              "barcode_id": 747727746724
+          }
+      ],
+      "related_items": [
+          "French Fries",
+          "Frozen"
+      ],
+      "id": 18
+  },
+  {
+      "product_name": "Mother Dairy Butter (Mother, Dairy)",
+      "category": "Dairy",
+      "brand": "Mother",
+      "quantity": 5,
+      "items": [
+          {
+              "expiry": "2025-05-09",
+              "barcode_id": 818459398363
+          },
+          {
+              "expiry": "2026-07-21",
+              "barcode_id": 213191967365
+          },
+          {
+              "expiry": "2028-09-10",
+              "barcode_id": 376313731289
+          },
+          {
+              "expiry": "2026-05-21",
+              "barcode_id": 956409641222
+          },
+          {
+              "expiry": "2025-03-15",
+              "barcode_id": 450804660677
+          }
+      ],
+      "related_items": [
+          "Butter",
+          "Dairy"
+      ],
+      "id": 19
+  },
+  {
+      "product_name": "Nestle Yogurt (Nestle, Dairy)",
+      "category": "Dairy",
+      "brand": "Nestle",
+      "quantity": 6,
+      "items": [
+          {
+              "expiry": "2027-04-27",
+              "barcode_id": 353245590682
+          },
+          {
+              "expiry": "2026-11-03",
+              "barcode_id": 998429630778
+          },
+          {
+              "expiry": "2026-10-12",
+              "barcode_id": 634643725784
+          },
+          {
+              "expiry": "2025-05-08",
+              "barcode_id": 353185385442
+          },
+          {
+              "expiry": "2026-12-07",
+              "barcode_id": 176909273243
+          },
+          {
+              "expiry": "2028-10-13",
+              "barcode_id": 828688101964
+          }
+      ],
+      "related_items": [
+          "Yogurt",
+          "Dairy"
+      ],
+      "id": 20
+  },
+  {
+      "product_name": "Nivea Body Lotion (Nivea, Personal Care)",
+      "category": "Personal Care",
+      "brand": "Nivea",
+      "quantity": 4,
+      "items": [
+          {
+              "expiry": "2025-05-13",
+              "barcode_id": 955697729869
+          },
+          {
+              "expiry": "2027-06-20",
+              "barcode_id": 913825519116
+          },
+          {
+              "expiry": "2025-11-10",
+              "barcode_id": 532863916901
+          },
+          {
+              "expiry": "2027-11-28",
+              "barcode_id": 622187645612
+          }
+      ],
+      "related_items": [
+          "Body Lotion",
+          "Personal Care"
+      ],
+      "id": 21
+  },
+  {
+      "product_name": "Oreo Cookies (Oreo, Bakery)",
+      "category": "Bakery",
+      "brand": "Oreo",
+      "quantity": 10,
+      "items": [
+          {
+              "expiry": "2025-03-17",
+              "barcode_id": 271954499690
+          },
+          {
+              "expiry": "2028-04-19",
+              "barcode_id": 813993167946
+          },
+          {
+              "expiry": "2025-02-20",
+              "barcode_id": 959734335643
+          },
+          {
+              "expiry": "2026-12-11",
+              "barcode_id": 581598843368
+          },
+          {
+              "expiry": "2025-01-07",
+              "barcode_id": 754641921295
+          },
+          {
+              "expiry": "2025-03-22",
+              "barcode_id": 263110324205
+          },
+          {
+              "expiry": "2027-11-18",
+              "barcode_id": 223006577204
+          },
+          {
+              "expiry": "2027-04-22",
+              "barcode_id": 340615629182
+          },
+          {
+              "expiry": "2026-04-27",
+              "barcode_id": 299408673702
+          },
+          {
+              "expiry": "2028-11-05",
+              "barcode_id": 396113903294
+          }
+      ],
+      "related_items": [
+          "Cookies",
+          "Snacks"
+      ],
+      "id": 22
+  },
+  {
+      "product_name": "Patanjali Aloe Vera Gel (Patanjali, Personal Care)",
+      "category": "Personal Care",
+      "brand": "Patanjali",
+      "quantity": 7,
+      "items": [
+          {
+              "expiry": "2028-10-21",
+              "barcode_id": 412426168488
+          },
+          {
+              "expiry": "2026-04-03",
+              "barcode_id": 526539238012
+          },
+          {
+              "expiry": "2025-03-16",
+              "barcode_id": 660964413593
+          },
+          {
+              "expiry": "2028-03-25",
+              "barcode_id": 571253822211
+          },
+          {
+              "expiry": "2027-05-16",
+              "barcode_id": 790448286346
+          },
+          {
+              "expiry": "2026-01-26",
+              "barcode_id": 792303173960
+          },
+          {
+              "expiry": "2026-09-03",
+              "barcode_id": 663751215512
+          }
+      ],
+      "related_items": [
+          "Aloe Vera Gel",
+          "Personal Care"
+      ],
+      "id": 23
+  },
+  {
+      "product_name": "Pepsi (Pepsi, Beverages)",
+      "category": "Beverages",
+      "brand": "Pepsi",
+      "quantity": 6,
+      "items": [
+          {
+              "expiry": "2025-11-28",
+              "barcode_id": 879250499540
+          },
+          {
+              "expiry": "2028-03-07",
+              "barcode_id": 167048611976
+          },
+          {
+              "expiry": "2026-12-05",
+              "barcode_id": 410199115148
+          },
+          {
+              "expiry": "2028-04-12",
+              "barcode_id": 850710855938
+          },
+          {
+              "expiry": "2027-04-22",
+              "barcode_id": 830744122724
+          },
+          {
+              "expiry": "2025-02-24",
+              "barcode_id": 970496166116
+          }
+      ],
+      "related_items": [
+          "Soft Drink",
+          "Beverages"
+      ],
+      "id": 24
+  },
+  {
+      "product_name": "Red Bull Energy Drink (Red, Beverages)",
+      "category": "Beverages",
+      "brand": "Red",
+      "quantity": 13,
+      "items": [
+          {
+              "expiry": "2025-01-17",
+              "barcode_id": 485199206528
+          },
+          {
+              "expiry": "2027-07-15",
+              "barcode_id": 637477726048
+          },
+          {
+              "expiry": "2026-08-16",
+              "barcode_id": 952483451267
+          },
+          {
+              "expiry": "2025-02-11",
+              "barcode_id": 638317981855
+          },
+          {
+              "expiry": "2026-03-20",
+              "barcode_id": 409177827613
+          },
+          {
+              "expiry": "2028-03-23",
+              "barcode_id": 628162936677
+          },
+          {
+              "expiry": "2025-01-04",
+              "barcode_id": 107679285729
+          },
+          {
+              "expiry": "2028-08-12",
+              "barcode_id": 828242505977
+          },
+          {
+              "expiry": "2026-06-24",
+              "barcode_id": 198663537091
+          },
+          {
+              "expiry": "2027-03-22",
+              "barcode_id": 281889524133
+          },
+          {
+              "expiry": "2026-03-21",
+              "barcode_id": 332820056467
+          },
+          {
+              "expiry": "2028-06-14",
+              "barcode_id": 633737730079
+          },
+          {
+              "expiry": "2026-12-26",
+              "barcode_id": 477655164436
+          }
+      ],
+      "related_items": [
+          "Energy Drink",
+          "Beverages"
+      ],
+      "id": 25
+  },
+  {
+      "product_name": "Tata Salt (Tata, Grocery)",
+      "category": "Grocery",
+      "brand": "Tata",
+      "quantity": 7,
+      "items": [
+          {
+              "expiry": "2027-05-02",
+              "barcode_id": 952981472569
+          },
+          {
+              "expiry": "2028-03-17",
+              "barcode_id": 173115730061
+          },
+          {
+              "expiry": "2026-05-03",
+              "barcode_id": 986403463026
+          },
+          {
+              "expiry": "2028-01-14",
+              "barcode_id": 553292343548
+          },
+          {
+              "expiry": "2027-08-01",
+              "barcode_id": 905010156687
+          },
+          {
+              "expiry": "2025-07-14",
+              "barcode_id": 544280929847
+          },
+          {
+              "expiry": "2027-02-10",
+              "barcode_id": 896224447633
+          }
+      ],
+      "related_items": [
+          "Salt",
+          "Grocery"
+      ],
+      "id": 26
+  },
+  {
+      "product_name": "Tropicana Orange Juice (Tropicana, Beverages)",
+      "category": "Beverages",
+      "brand": "Tropicana",
+      "quantity": 6,
+      "items": [
+          {
+              "expiry": "2027-02-17",
+              "barcode_id": 269420721837
+          },
+          {
+              "expiry": "2027-03-05",
+              "barcode_id": 278683625149
+          },
+          {
+              "expiry": "2025-11-06",
+              "barcode_id": 175179668327
+          },
+          {
+              "expiry": "2027-04-24",
+              "barcode_id": 956117862908
+          },
+          {
+              "expiry": "2025-06-23",
+              "barcode_id": 816329031556
+          },
+          {
+              "expiry": "2027-07-07",
+              "barcode_id": 879775296110
+          }
+      ],
+      "related_items": [
+          "Orange Juice",
+          "Beverages"
+      ],
+      "id": 27
+  },
+  {
+      "product_name": "Yummiez Chicken Nuggets (Yummiez, Frozen)",
+      "category": "Frozen",
+      "brand": "Yummiez",
+      "quantity": 6,
+      "items": [
+          {
+              "expiry": "2026-07-08",
+              "barcode_id": 926409112264
+          },
+          {
+              "expiry": "2026-02-15",
+              "barcode_id": 593912152993
+          },
+          {
+              "expiry": "2027-09-19",
+              "barcode_id": 816869337329
+          },
+          {
+              "expiry": "2025-02-08",
+              "barcode_id": 760112720457
+          },
+          {
+              "expiry": "2027-01-20",
+              "barcode_id": 589133839439
+          },
+          {
+              "expiry": "2025-05-13",
+              "barcode_id": 971552099841
+          }
+      ],
+      "related_items": [
+          "Chicken Nuggets",
+          "Frozen"
+      ],
+      "id": 28
+  }
+]
+
 router.post('/add', async (req, res) => {
   const { product_id, name, category, description, brand, supplier, sku, barcode, stock, pricing, warehouse, order_data } = req.body;
 
@@ -29,9 +1196,12 @@ router.post('/add', async (req, res) => {
 
 router.get('/all', async (req, res) => {
   try {
-    console.log('hii 1');
-    const inventory = await Inventory.find().limit(50);
-    console.log('hii 2');
+
+    
+
+    // console.log('hii 1');
+    // const inventory = await Inventory.find().limit(50);
+    // console.log('hii 2');
     res.status(200).json(inventory);
   } catch (error) {
     console.log(error);
