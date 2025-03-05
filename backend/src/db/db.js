@@ -1,31 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const inventorySchema = new mongoose.Schema({
-  product_id: { type: Number, required: true, unique: true },
-  name: { type: String, required: true },
+  product_name: String,
   category: String,
   description: String,
   brand: String,
   supplier: String,
-  sku: String,
-  barcode: String,
-  stock_quantity: Number,
-  min_stock_level: Number,
-  reorder_alert: Boolean,
+  SKU: { type: String, unique: true, sparse: true },
+  barcode: { type: String, unique: true, sparse: true },
+  stock_quantity: String,
+  min_stock_level: String,
+  reorder_alert: String,
   batch_number: String,
-  expiry_date: String, // Keeping as String to match "21-10-2025" format
-  cost_price: Number,
-  selling_price: Number,
-  discount: Number,
-  tax: Number,
+  expiry_date: String, // Use Date type if necessary
+  cost_price: String,
+  selling_price: String,
+  discount: String,
+  tax: String,
   aisle: String,
   bin: String,
   section: String,
-  monthly_sales: Number,
-  average_demand: Number,
-  restock_threshold: Number
-});
+  monthly_sales: String,
+  average_demand: String,
+  restock_threshold: String
+}, { timestamps: true });
 
-const Inventory = mongoose.model('inventory', inventorySchema);
+const Inventory = mongoose.model("inventory", inventorySchema);
 
 module.exports = Inventory;

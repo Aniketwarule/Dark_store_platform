@@ -11,6 +11,7 @@ app.use(cors());
 
 // Existing inventory route
 app.use('/inventory', inventoryRouter);
+app.use('/gemini', require('./routes/geminiRoute'));
 
 // New orders route
 app.use('/api/orders', orderRoutes);
