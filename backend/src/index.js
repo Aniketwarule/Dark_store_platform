@@ -10,6 +10,7 @@ app.use(cors())
 
 
 app.use('/inventory', inventoryRouter);
+app.use('/gemini', require('./routes/geminiRoute'));
 
 app.get('/', (req, res) => {
     res.send('Hii there')

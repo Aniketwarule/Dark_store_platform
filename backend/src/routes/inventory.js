@@ -30,7 +30,7 @@ router.post('/add', async (req, res) => {
 router.get('/all', async (req, res) => {
   try {
     console.log('hii 1');
-    const inventory = await Inventory.find();
+    const inventory = await Inventory.find().limit(50);
     console.log('hii 2');
     res.status(200).json(inventory);
   } catch (error) {
