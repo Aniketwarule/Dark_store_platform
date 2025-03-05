@@ -1,7 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // File: C:\Users\Admin\Dark Store\frontend\app\(dashboard)\layout.tsx
+=======
+// File: /home/adityanikkam/projects/Dark_store_platform/frontend/app/(dashboard)/layout.tsx
+>>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
 =======
 // File: /home/adityanikkam/projects/Dark_store_platform/frontend/app/(dashboard)/layout.tsx
 >>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
