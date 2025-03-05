@@ -4,6 +4,18 @@ const Order = require('../db/orderModel'); // Adjust the path as needed
 
 const router = express.Router();
 
+const mapOrderData = (order) => {
+  return {
+    orderId: order.orderId,
+    products: order.products,
+    customerName: order.customerName,
+    totalOrderValue: order.totalOrderValue,
+    status: order.status,
+    deliveryDetails: order.deliveryDetails,
+    additionalInfo: order.additionalInfo
+  };
+}
+
 // Generate dummy order data
 const generateDummyOrder = () => {
   // DUMMY DATA GENERATION
