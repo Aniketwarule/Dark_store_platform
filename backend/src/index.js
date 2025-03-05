@@ -13,9 +13,12 @@ app.use(cors());
 app.use('/inventory', inventoryRouter);
 app.use('/gemini', require('./routes/geminiRoute'));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // New orders route
 app.use('/api/orders', orderRoutes);
+=======
+>>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
 =======
 >>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
 
