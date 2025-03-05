@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Header } from '@/components/layout/header';
 import {
   Table,
@@ -21,68 +22,127 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { format } from 'date-fns';
+import { toast } from 'sonner'; // Assuming you're using shadcn/ui sonner for toasts
 
-const orders = [
-  {
-    id: 'ORD-001',
-    customer: 'John Doe',
-    date: new Date(2024, 2, 15),
-    total: 125.99,
-    status: 'Processing',
-    items: 5,
-  },
-  {
-    id: 'ORD-002',
-    customer: 'Jane Smith',
-    date: new Date(2024, 2, 15),
-    total: 89.99,
-    status: 'Delivered',
-    items: 3,
-  },
-  {
-    id: 'ORD-003',
-    customer: 'Bob Johnson',
-    date: new Date(2024, 2, 14),
-    total: 199.99,
-    status: 'Pending',
-    items: 7,
-  },
-  {
-    id: 'ORD-004',
-    customer: 'Alice Brown',
-    date: new Date(2024, 2, 14),
-    total: 45.99,
-    status: 'Delivered',
-    items: 2,
-  },
-  {
-    id: 'ORD-005',
-    customer: 'Charlie Wilson',
-    date: new Date(2024, 2, 13),
-    total: 299.99,
-    status: 'Processing',
-    items: 10,
-  },
-];
+// Configure axios base URL
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-const statusColors: Record<string, string> = {
-  Pending: 'bg-yellow-500',
-  Processing: 'bg-blue-500',
-  Delivered: 'bg-green-500',
-  Cancelled: 'bg-red-500',
-};
+// Define Order interface
+interface Order {
+  _id: string;
+  orderId: string;
+  customerName: string;
+  orderDate: Date;
+  totalOrderValue: number;
+  status: 'Pending' | 'Processing' | 'Delivered' | 'Cancelled';
+  products: Array<{
+    productName: string;
+    quantity: number;
+    sellingPrice: number;
+  }>;
+}
 
 export default function OrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
   const [statusFilter, setStatusFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const filteredOrders = orders.filter((order) => {
-    const matchesStatus = statusFilter === 'All' || order.status === statusFilter;
-    const matchesSearch = 
-      order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatus && matchesSearch;
-  });
+  // Fetch orders from backend
+  const fetchOrders = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/orders');
+      console.log('Fetched orders:', response.data);
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      toast.error('Failed to fetch orders', {
+        description: error instanceof Error ? error.message : 'Unknown error occurred'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Generate a new order
+  const generateOrder = async () => {
+    try {
+      setLoading(true);
+      console.log('Attempting to generate order');
+      
+      const response = await axios.post('/api/orders/create', {}, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Order generation response:', response.data);
+      
+      toast.success('Order Generated', {
+        description: `Order ${response.data.order.orderId} created successfully`
+      });
+      
+      // Refresh the order list
+      await fetchOrders();
+    } catch (error) {
+      console.error('Detailed error generating order:', error);
+      
+      // More detailed error handling
+      if (axios.isAxiosError(error)) {
+        toast.error('Order Generation Failed', {
+          description: error.response?.data?.message || error.message
+        });
+      } else {
+        toast.error('Unexpected Error', {
+          description: 'An unexpected error occurred while generating the order'
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update order status
+  const updateOrderStatus = async (id: string, status: string) => {
+    try {
+      setLoading(true);
+      await axios.patch(`/api/orders/${id}/status`, { status });
+      
+      toast.success('Order Status Updated', {
+        description: `Order status changed to ${status}`
+      });
+      
+      await fetchOrders(); // Refresh the order list
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      
+      toast.error('Failed to Update Order Status', {
+        description: error instanceof Error ? error.message : 'Unknown error occurred'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch orders on component mount
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  // Filter and sort orders
+  const filteredOrders = orders
+    .filter((order) => {
+      const matchesStatus = statusFilter === 'All' || order.status === statusFilter;
+      const matchesSearch = 
+        order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.customerName.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesStatus && matchesSearch;
+    })
+    .sort((a, b) => {
+      const statusPriority = { 'Pending': 0, 'Processing': 1, 'Delivered': 2, 'Cancelled': 3 };
+      return statusPriority[a.status] - statusPriority[b.status];
+    });
 
   return (
     <>
@@ -109,8 +169,13 @@ export default function OrdersPage() {
               </SelectContent>
             </Select>
           </div>
-          <Button>Export Orders</Button>
-          <Button>Export Orders</Button>
+          <Button 
+            onClick={generateOrder} 
+            disabled={loading}
+            variant={loading ? 'outline' : 'default'}
+          >
+            {loading ? 'Generating...' : 'Generate Order'}
+          </Button>
         </div>
 
         <div className="border rounded-lg">
@@ -128,21 +193,46 @@ export default function OrdersPage() {
             </TableHeader>
             <TableBody>
               {filteredOrders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.id}</TableCell>
-                  <TableCell>{order.customer}</TableCell>
-                  <TableCell>{format(order.date, 'MMM dd, yyyy')}</TableCell>
-                  <TableCell>{order.items}</TableCell>
-                  <TableCell>${order.total.toFixed(2)}</TableCell>
+                <TableRow key={order._id}>
+                  <TableCell className="font-medium">{order.orderId}</TableCell>
+                  <TableCell>{order.customerName}</TableCell>
+                  <TableCell>{format(new Date(order.orderDate), 'MMM dd, yyyy')}</TableCell>
+                  <TableCell>{order.products.reduce((sum, product) => sum + product.quantity, 0)}</TableCell>
+                  <TableCell>${order.totalOrderValue.toFixed(2)}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary">
+                    <Badge 
+                      variant="secondary" 
+                      className={
+                        order.status === 'Pending' ? 'bg-yellow-500' :
+                        order.status === 'Processing' ? 'bg-blue-500' :
+                        order.status === 'Delivered' ? 'bg-green-500' : 
+                        'bg-red-500'
+                      }
+                    >
                       {order.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">
-                      View Details
-                    </Button>
+                    {order.status === 'Pending' && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => updateOrderStatus(order._id, 'Processing')}
+                        disabled={loading}
+                      >
+                        Execute
+                      </Button>
+                    )}
+                    {order.status === 'Processing' && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => updateOrderStatus(order._id, 'Delivered')}
+                        disabled={loading}
+                      >
+                        Done
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,23 +1,35 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const inventoryRouter = require('./routes/inventory');
+const orderRoutes = require('./routes/orderRoutes'); // Add this line for order routes
 
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
-
+// Existing inventory route
 app.use('/inventory', inventoryRouter);
+
+// New orders route
+app.use('/api/orders', orderRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hii there')
+});
+
+// MongoDB connection
+mongoose.connect('mongodb+srv://aniketwarule775:CdJ1lRci5YIBItYZ@cluster0.szgy81i.mongodb.net/', {
+    dbName: 'dark_store_DB'
 })
-
-mongoose.connect('mongodb+srv://aniketwarule775:CdJ1lRci5YIBItYZ@cluster0.szgy81i.mongodb.net/', {dbName: 'dark_store_DB'});
-
+.then(() => {
+    console.log('MongoDB connected successfully');
+})
+.catch((error) => {
+    console.error('MongoDB connection error:', error);
+});
 
 app.listen(8000, () => {
     console.log('Backend started at 8000')
-})
+});
