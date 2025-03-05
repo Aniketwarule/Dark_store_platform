@@ -1,7 +1,12 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/(dashboard)/dashboard/orders/page": "app/(dashboard)/dashboard/orders/page.js",
   "/(dashboard)/dashboard/inventory/page": "app/(dashboard)/dashboard/inventory/page.js"
+=======
+  "/page": "app/page.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js"
+>>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
 =======
   "/page": "app/page.js",
   "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js"
