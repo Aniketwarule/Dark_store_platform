@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // File: C:\Users\Admin\Dark Store\frontend\app\layout.tsx
+=======
+// File: /home/adityanikkam/projects/Dark_store_platform/frontend/app/layout.tsx
+>>>>>>> a63396536a9e71b1f4bf96fca5dd270a5f836f44
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
