@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import axios from 'axios';
-const BASEURL = "http://localhost:8000";
+const BASEURL = "https://dark-store-platform.onrender.com";
 
 const roles = ['All Roles', 'Store Manager', 'Inventory Specialist', 'Order Fulfillment', 'Delivery Coordinator'];
 

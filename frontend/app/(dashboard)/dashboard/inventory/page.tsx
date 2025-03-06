@@ -29,7 +29,7 @@ import {
 import { Plus, Upload, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import axios from 'axios';
-const BASEURL = "http://localhost:8000";
+const BASEURL = "https://dark-store-platform.onrender.com";
 
 const categories = ['All', 'Produce', 'Dairy', 'Bakery', 'Beverages', 'Pantry'];
 
