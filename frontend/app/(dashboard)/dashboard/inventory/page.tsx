@@ -28,8 +28,8 @@ import {
 } from '@/components/ui/select';
 import { Plus, Upload, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { BASEURL } from '@/app/page';
 import axios from 'axios';
+const BASEURL = "http://localhost:8000";
 
 const categories = ['All', 'Produce', 'Dairy', 'Bakery', 'Beverages', 'Pantry'];
 

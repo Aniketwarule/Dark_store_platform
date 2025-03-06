@@ -18,10 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BASEURL } from '@/app/page';
 import axios from 'axios';
+const BASEURL = "http://localhost:8000";
 
 const roles = ['All Roles', 'Store Manager', 'Inventory Specialist', 'Order Fulfillment', 'Delivery Coordinator'];
 
