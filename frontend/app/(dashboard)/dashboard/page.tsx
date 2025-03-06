@@ -11,7 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { Package, ShoppingCart, TrendingUp, Users } from 'lucide-react';
+import { Clock, Package, ShoppingCart, TrendingUp, Users } from 'lucide-react';
 
 const data = [
   { name: 'Mon', orders: 4000 },
