@@ -25,7 +25,9 @@ import { format } from 'date-fns';
 import { toast } from 'sonner'; // Assuming you're using shadcn/ui sonner for toasts
 
 // Configure axios base URL
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://dark-store-platform.onrender.com';
+// axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://dark-store-platform.onrender.com';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 
 // Define Order interface
 interface Order {

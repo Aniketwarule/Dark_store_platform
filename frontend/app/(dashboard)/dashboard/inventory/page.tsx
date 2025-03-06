@@ -29,7 +29,8 @@ import {
 import { Plus, Upload, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import axios from 'axios';
-const BASEURL = "https://dark-store-platform.onrender.com";
+// const BASEURL = "https://dark-store-platform.onrender.com";
+const BASEURL = "http://localhost:8000";
 
 const categories = ['All', 'Produce', 'Dairy', 'Bakery', 'Beverages', 'Pantry'];
 
@@ -204,22 +205,22 @@ export default function InventoryPage() {
               </SelectContent>
             </Select>
           </div>
-          <Dialog open={isAddProductDialogOpen} onOpenChange={setIsAddProductDialogOpen}>
-            <DialogTrigger>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-                <Button onClick={async() => {
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+                
+          <Button onClick={async() => {
                   const res = await axios.get(`${BASEURL}/inventory/opetimize`);
                   console.log(res.data);
                   setInventory(res.data);
                 }}>
-                  {/* <Plus className="h-4 w-4 mr-2" /> */}
                   Optimize Inventory
                 </Button>
+          <Dialog open={isAddProductDialogOpen} onOpenChange={setIsAddProductDialogOpen}>
+            <DialogTrigger>
+             
                 <Button>
                   <Plus className="h-4 w-4 mr-2" />
                   Add Product
                 </Button>
-              </div>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -232,14 +233,14 @@ export default function InventoryPage() {
                     placeholder="Enter product name" 
                     value={newProductName}
                     onChange={(e) => setNewProductName(e.target.value)}
-                  />
+                    />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Category*</label>
                   <Select 
                     value={newProductCategory}
                     onValueChange={setNewProductCategory}
-                  >
+                    >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
@@ -258,7 +259,7 @@ export default function InventoryPage() {
                     placeholder="Enter description" 
                     value={newProductDescription}
                     onChange={(e) => setNewProductDescription(e.target.value)}
-                  />
+                    />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Brand</label>
@@ -266,7 +267,7 @@ export default function InventoryPage() {
                     placeholder="Enter brand" 
                     value={newProductBrand}
                     onChange={(e) => setNewProductBrand(e.target.value)}
-                  />
+                    />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Stock Quantity*</label>
@@ -275,7 +276,7 @@ export default function InventoryPage() {
                     placeholder="Enter quantity"
                     value={newProductStock}
                     onChange={(e) => setNewProductStock(e.target.value)}
-                  />
+                    />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Price*</label>
@@ -285,7 +286,7 @@ export default function InventoryPage() {
                     placeholder="Enter price"
                     value={newProductPrice}
                     onChange={(e) => setNewProductPrice(e.target.value)}
-                  />
+                    />
                 </div>
                 
                 {message && <p className="text-sm text-red-500">{message}</p>}
@@ -303,7 +304,7 @@ export default function InventoryPage() {
                       setMessage('');
                     }}
                     className="w-full"
-                  >
+                    >
                     <Upload className="h-4 w-4 mr-2" />
                     Upload CSV
                   </Button>
@@ -318,7 +319,7 @@ export default function InventoryPage() {
                           //value={file.name} 
                           readOnly 
                           className="flex-grow"
-                        />
+                          />
                         <Button type="submit" size="sm">
                           Confirm Upload
                         </Button>
@@ -332,12 +333,13 @@ export default function InventoryPage() {
                       accept=".csv" 
                       onChange={handleFileChange} 
                       className="w-full"
-                    />
+                      />
                   </div>
                 )}
               </div>
             </DialogContent>
           </Dialog>
+        </div>
         </div>
 
         {loading ? (

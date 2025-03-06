@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -14,48 +15,76 @@ import {
 import { Clock, Package, ShoppingCart, TrendingUp, Users } from 'lucide-react';
 
 const data = [
-  { name: 'Mon', orders: 4000 },
-  { name: 'Tue', orders: 3000 },
-  { name: 'Wed', orders: 2000 },
-  { name: 'Thu', orders: 2780 },
-  { name: 'Fri', orders: 1890 },
-  { name: 'Sat', orders: 2390 },
-  { name: 'Sun', orders: 3490 },
-];
-
-const stats = [
-  {
-    title: 'Total Orders',
-    value: '2,345',
-    icon: ShoppingCart,
-    trend: '+12.5%',
-  },
-  {
-    title: 'Active Staff',
-    value: '15',
-    icon: Users,
-    trend: '+2.1%',
-  },
-  {
-    title: 'Products',
-    value: '1,234',
-    icon: Package,
-    trend: '+5.4%',
-  },
-  {
-    title: 'Revenue',
-    value: '$12,345',
-    icon: TrendingUp,
-    trend: '+8.2%',
-  },
+  { name: 'Mon', orders: 1 },
+  { name: 'Tue', orders: 2 },
+  { name: 'Wed', orders: 2 },
+  { name: 'Thu', orders: 2 },
+  { name: 'Fri', orders: 1 },
+  { name: 'Sat', orders: 3 },
+  { name: 'Sun', orders: 4 },
 ];
 
 export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    totalRevenue: 0,
+    activeStaff: 3, // Example static value
+    products: 9,    // Example static value
+  });
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch('http://localhost:8000/api/orders/stats');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Fetched stats:', data);
+        setStats((prevStats) => ({
+          ...prevStats,
+          totalOrders: data.totalOrders,
+          totalRevenue: data.totalRevenue,
+        }));
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      }
+    }
+
+    fetchStats();
+  }, []);
+
+  const statsData = [
+    {
+      title: 'Total Orders',
+      value: stats.totalOrders,
+      icon: ShoppingCart,
+      trend: '+12.5%', // Example static trend
+    },
+    {
+      title: 'Active Staff',
+      value: stats.activeStaff,
+      icon: Users,
+      trend: '+2.1%', // Example static trend
+    },
+    {
+      title: 'Products',
+      value: stats.products,
+      icon: Package,
+      trend: '+5.4%', // Example static trend
+    },
+    {
+      title: 'Revenue',
+      value: `$${stats.totalRevenue}`,
+      icon: TrendingUp,
+      trend: '+8.2%', // Example static trend
+    },
+  ];
+
   return (
     <>
       <Header title="Dashboard" />
       <main className="flex-1 overflow-y-auto p-6">
-
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="flex items-center space-x-3">
@@ -67,9 +96,9 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-        
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
+          {statsData.map((stat) => (
             <Card key={stat.title}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">

@@ -130,4 +130,24 @@ router.patch('/:id/status', async (req, res) => {
   }
 });
 
+router.get('/stats', async (req, res) => {
+  try {
+    const totalOrders = await Order.countDocuments();
+    const totalRevenueResult = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: '$totalOrderValue' },
+        },
+      },
+    ]);
+    const totalRevenue = totalRevenueResult[0]?.totalRevenue || 0;
+
+    res.status(200).json({ totalOrders, totalRevenue });
+  } catch (error) {
+    console.error('Error fetching order stats:', error);
+    res.status(500).json({ message: 'Error fetching order stats', error: error.message });
+  }
+});
+
 module.exports = router;

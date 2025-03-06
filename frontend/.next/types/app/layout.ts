@@ -1,4 +1,4 @@
-// File: D:\Hackron\Dark_store_platform\frontend\app\layout.tsx
+// File: D:\abcd\Dark_store_platform\frontend\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
