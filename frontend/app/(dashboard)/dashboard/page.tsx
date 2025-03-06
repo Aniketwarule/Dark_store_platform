@@ -55,6 +55,19 @@ export default function DashboardPage() {
     <>
       <Header title="Dashboard" />
       <main className="flex-1 overflow-y-auto p-6">
+
+        <Card className="mb-6">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <Clock className="h-6 w-6 text-green-500" />
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Time Saved</p>
+                <h3 className="text-2xl font-bold text-green-500">2 hours</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
             <Card key={stat.title}>
