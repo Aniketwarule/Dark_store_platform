@@ -14,6 +14,8 @@ import {
 } from 'recharts';
 import { Clock, Package, ShoppingCart, TrendingUp, Users } from 'lucide-react';
 
+const BASEURL = "https://dark-store-platform.onrender.com"
+
 const data = [
   { name: 'Mon', orders: 1 },
   { name: 'Tue', orders: 2 },
@@ -35,7 +37,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const response = await fetch('http://localhost:8000/api/orders/stats');
+        const response = await fetch(`${BASEURL}/api/orders/stats`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
