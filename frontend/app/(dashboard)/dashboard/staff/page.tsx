@@ -89,7 +89,7 @@ export default function StaffPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {staff.map((member) => (
+          {staff.map((member: any) => (
             <Card>
               <CardHeader className="flex flex-row items-center gap-4">
                 {/* <Avatar className="h-12 w-12">

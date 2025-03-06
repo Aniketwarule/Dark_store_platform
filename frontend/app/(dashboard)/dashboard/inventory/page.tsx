@@ -83,19 +83,19 @@ export default function InventoryPage() {
 
   console.log(inventory)
 
-  const filteredInventory = inventory.filter((item) => {
+  const filteredInventory = inventory.filter((item: any) => {
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     const matchesSearch = item.product_name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
     }
   };
 
-  const handleCSVUpload = async (e) => {
+  const handleCSVUpload = async (e: any) => {
     e.preventDefault();
     if (!file) {
       setMessage('Please select a CSV file to upload.');
@@ -365,7 +365,7 @@ export default function InventoryPage() {
               </TableHeader>
               <TableBody>
                 {filteredInventory.length > 0 ? (
-                  filteredInventory.map((item) => (
+                  filteredInventory.map((item: any) => (
                     <TableRow key={item.product_id}>
                       <TableCell className="font-medium">{item.product_name}</TableCell>
                       <TableCell>{item.category}</TableCell>
